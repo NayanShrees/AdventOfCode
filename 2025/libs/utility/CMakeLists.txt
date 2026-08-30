@@ -1,0 +1,28 @@
+cmake_minimum_required(VERSION 4.1.6)
+set(CMAKE_CXX_STANDARD 26)
+set(CMAKE_CXX_STANDARD_REQUIRED True)
+project(Utility VERSION 0.1)
+
+set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
+
+set(UTILITY_LIB Utility)
+set(UTILITY_LIB ${UTILITY_LIB} PARENT_SCOPE)
+
+set(INCLUDE_DIR ${CMAKE_CURRENT_SOURCE_DIR}/include)
+
+set(SOURCES
+  ${CMAKE_CURRENT_SOURCE_DIR}/src/file.cpp
+)
+
+add_library(${UTILITY_LIB} SHARED ${SOURCES})
+target_include_directories(${UTILITY_LIB} PUBLIC ${INCLUDE_DIR})
+
+if(DEVELOPMENT_MODE)
+  target_compile_definitions(${UTILITY_LIB} PRIVATE DEVELOPMENT_MODE)
+endif()
+
+install(TARGETS ${UTILITY_LIB}
+  RUNTIME DESTINATION bin
+  LIBRARY DESTINATION lib/utility
+  ARCHIVE DESTINATION lib/utility
+)
