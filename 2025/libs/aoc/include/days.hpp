@@ -27,6 +27,8 @@ class Days {
         }
     }
 
+    virtual ~Days() = default;
+
     virtual DaysError day_part_1_example(int32_t&) {
         LOG_ERROR("Day Part 1 Example not implemented");
         return DaysError::VIRTUAL_FUNCTION_NOT_IMPLEMENTED;

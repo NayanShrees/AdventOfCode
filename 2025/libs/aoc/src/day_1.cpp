@@ -9,10 +9,7 @@ DaysError Day_1::day_part_1_example(int32_t&) {
     return DaysError::OK;
 }
 
-DaysError Day_1::day_part_1(int32_t&) {
-    std::cout << day_buffer << std::endl;
-    return DaysError::OK;
-}
+DaysError Day_1::day_part_1(int32_t&) { return DaysError::OK; }
 
 DaysError Day_1::day_part_2_example(int32_t& out) { return Days::day_part_2_example(out); }
 

@@ -6,6 +6,8 @@
 class Day_1 : public Days {
    public:
     Day_1() : Days(day) {};
+    ~Day_1() = default;
+
     DaysError day_part_1_example(int& out) override;
     DaysError day_part_1(int& out) override;
     DaysError day_part_2_example(int& out) override;
