@@ -3,13 +3,17 @@ set(TARGET_APP AoC)
 set(INCLUDE_DIR ${CMAKE_SOURCE_DIR}/include)
 
 set(SOURCES
-  ${CMAKE_CURRENT_SOURCE_DIR}/days/day_1.cpp
   ${CMAKE_CURRENT_SOURCE_DIR}/main.cpp
 )
 
 add_executable(${TARGET_APP} ${SOURCES})
 target_include_directories(${TARGET_APP} PRIVATE ${INCLUDE_DIR})
-target_link_libraries(${TARGET_APP} PUBLIC ${UTILITY_LIB})
+target_link_libraries(
+  ${TARGET_APP}
+  PRIVATE
+  ${UTILITY_LIB}
+  ${AOC_LIB}
+)
 
 if(DEVELOPMENT_MODE)
   target_compile_definitions(${TARGET_APP} PRIVATE DEVELOPMENT_MODE)

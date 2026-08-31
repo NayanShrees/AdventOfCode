@@ -4,13 +4,13 @@
 #include "days/day_1.hpp"
 #include "utility/logger.hpp"
 
-DaysError Day_1::day_part_1_example(int32_t& out) {
+DaysError Day_1::day_part_1_example(int32_t&) {
     LOG_INFO(example_buffer);
     return DaysError::OK;
 }
 
-DaysError Day_1::day_part_1(int32_t& out) {
-    LOG_INFO(day_buffer);
+DaysError Day_1::day_part_1(int32_t&) {
+    std::cout << day_buffer << std::endl;
     return DaysError::OK;
 }
 

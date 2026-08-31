@@ -1,0 +1,29 @@
+cmake_minimum_required(VERSION 4.1.6)
+set(CMAKE_CXX_STANDARD 26)
+set(CMAKE_CXX_STANDARD_REQUIRED True)
+project(AoC_Lib VERSION 0.1)
+
+set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
+
+set(AOC_LIB AoC_Lib)
+set(AOC_LIB ${AOC_LIB} PARENT_SCOPE)
+
+set(INCLUDE_DIR ${CMAKE_CURRENT_SOURCE_DIR}/include)
+
+set(SOURCES
+  ${CMAKE_CURRENT_SOURCE_DIR}/src/day_1.cpp
+)
+
+add_library(${AOC_LIB} SHARED ${SOURCES})
+target_include_directories(${AOC_LIB} PUBLIC ${INCLUDE_DIR})
+target_link_libraries(${AOC_LIB} PRIVATE ${UTILITY_LIB})
+
+if(DEVELOPMENT_MODE)
+  target_compile_definitions(${AOC_LIB} PRIVATE DEVELOPMENT_MODE)
+endif()
+
+install(TARGETS ${AOC_LIB}
+  RUNTIME DESTINATION bin
+  LIBRARY DESTINATION lib
+  ARCHIVE DESTINATION lib
+)
