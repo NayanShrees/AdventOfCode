@@ -7,26 +7,24 @@
 #include <string_view>
 
 #ifdef DEVELOPMENT_MODE
-#define LOG_DEBUG(msg) Logger::log(LogLevel::Debug, __func__, msg)
-#define LOG_INFO(msg) Logger::log(LogLevel::Info, __func__, msg)
+#define LOG_DEBUG(...) Logger::log(LogLevel::DEBUG, __func__, __VA_ARGS__)
+#define LOG_INFO(...) Logger::log(LogLevel::INFO, __func__, __VA_ARGS__)
 #else
-#define LOG_DEBUG(msg) \
+#define LOG_DEBUG(...) \
     do {               \
-        (void)(msg);   \
     } while (0)
-#define LOG_INFO(msg) \
+#define LOG_INFO(...) \
     do {              \
-        (void)(msg);  \
     } while (0)
 #endif
-#define LOG_WARN(msg) Logger::log(LogLevel::Warn, __func__, msg)
-#define LOG_ERROR(msg) Logger::log(LogLevel::Error, __func__, msg)
+#define LOG_WARN(...) Logger::log(LogLevel::WARN, __func__, __VA_ARGS__)
+#define LOG_ERROR(...) Logger::log(LogLevel::ERROR, __func__, __VA_ARGS__)
 
 enum class LogLevel {
-    Debug,
-    Info,
-    Warn,
-    Error,
+    DEBUG,
+    INFO,
+    WARN,
+    ERROR,
 };
 
 class Logger {
@@ -36,13 +34,13 @@ class Logger {
 
     static constexpr std::string_view levelToString(LogLevel level) {
         switch (level) {
-            case LogLevel::Debug:
+            case LogLevel::DEBUG:
                 return "[DEBUG]";
-            case LogLevel::Info:
+            case LogLevel::INFO:
                 return "[INFO]";
-            case LogLevel::Warn:
+            case LogLevel::WARN:
                 return "[WARN]";
-            case LogLevel::Error:
+            case LogLevel::ERROR:
                 return "[ERROR]";
         }
         return "[UNKNOWN]";
@@ -53,20 +51,21 @@ class Logger {
         fileStream.open(filepath, std::ios::out | std::ios::app);
         if (fileStream.is_open()) {
             logToFile = true;
-            LOG_INFO(std::format("Logging to file: {}", filepath));
+            LOG_INFO("Logging to file: {}", filepath);
         } else {
             std::cerr << "[LOGGER ERROR] Failed to open log file: " << filepath << '\n';
         }
     }
 
-    static void log(LogLevel level, std::string_view func, std::string_view message) {
-        std::string_view prefix = levelToString(level);
-        std::string log_message = std::format("{} [{}] {}\n", prefix, func, message);
-        if (level == LogLevel::Error) {
+    template <typename... Args>
+    static void log(LogLevel level, std::string_view func, std::format_string<Args...> format,
+                    Args&&... args) {
+        const auto message = std::format(format, std::forward<Args>(args)...);
+        const auto log_message = std::format("{} [{}] {}\n", levelToString(level), func, message);
+        if (level == LogLevel::ERROR) {
             std::cerr << log_message;
         } else {
             std::cout << log_message;
-            ;
         }
 
         if (logToFile && fileStream.is_open()) {

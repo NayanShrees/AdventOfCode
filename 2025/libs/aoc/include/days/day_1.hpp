@@ -1,6 +1,8 @@
 #ifndef DAY_1_HPP_
 #define DAY_1_HPP_
 
+#include <cstdint>
+
 #include "days.hpp"
 
 class Day_1 : public Days {
@@ -8,13 +10,10 @@ class Day_1 : public Days {
     Day_1() : Days(day) {};
     ~Day_1() = default;
 
-    DaysError day_part_1_example(int& out) override;
-    DaysError day_part_1(int& out) override;
-    DaysError day_part_2_example(int& out) override;
-    DaysError day_part_2(int& out) override;
-
    private:
-    static constexpr uint8_t day = 1;
+    DaysError part_1(std::int32_t& out, bool example = false) override;
+    DaysError part_2(std::int32_t& out, bool example = false) override;
+    static constexpr std::uint8_t day = 1;
 };
 
 #endif  // DAY_1_HPP_

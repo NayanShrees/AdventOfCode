@@ -12,6 +12,7 @@ set(INCLUDE_DIR ${CMAKE_CURRENT_SOURCE_DIR}/include)
 
 set(SOURCES
   ${CMAKE_CURRENT_SOURCE_DIR}/src/file.cpp
+  ${CMAKE_CURRENT_SOURCE_DIR}/src/runtime.cpp
 )
 
 add_library(${UTILITY_LIB} SHARED ${SOURCES})
