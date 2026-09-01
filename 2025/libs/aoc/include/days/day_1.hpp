@@ -8,12 +8,9 @@ class Day_1 : public Days {
     Day_1() : Days(day) {};
     ~Day_1() = default;
 
-    DaysError day_part_1_example(int& out) override;
-    DaysError day_part_1(int& out) override;
-    DaysError day_part_2_example(int& out) override;
-    DaysError day_part_2(int& out) override;
-
    private:
+    DaysError part_1(int32_t& out, bool example = false) override;
+    DaysError part_2(int32_t& out, bool example = false) override;
     static constexpr uint8_t day = 1;
 };
 

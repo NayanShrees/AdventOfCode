@@ -3,6 +3,7 @@
 
 #include "cxxopts.hpp"
 #include "day_factory.hpp"
+#include "days.hpp"
 #include "utility/logger.hpp"
 
 bool parse_opts(int argc, char* argv[], std::string& log_file_path, uint8_t& day_choice) {
@@ -26,14 +27,14 @@ bool parse_opts(int argc, char* argv[], std::string& log_file_path, uint8_t& day
 
         if (result.count("day")) {
             int32_t user_day_choice = result["day"].as<int32_t>();
-            if (user_day_choice >= 1 && user_day_choice <= 25) {
-                LOG_ERROR(std::format("Day should be 1 <= Day <= 25, not {}", user_day_choice));
+            if (user_day_choice < 1 || user_day_choice > 25) {
+                LOG_ERROR("Day should be 1 <= Day <= 25, not {}", user_day_choice);
                 return false;
             }
             day_choice = static_cast<uint8_t>(user_day_choice);
         }
     } catch (const cxxopts::exceptions::exception& e) {
-        LOG_ERROR(std::format("Error parsing options: {}", e.what()));
+        LOG_ERROR("Error parsing options: {}", e.what());
         return false;
     };
     return true;
@@ -54,14 +55,19 @@ int main(int argc, char* argv[]) {
     if (day_num != 0) {
         const auto day = day_factories.find(day_num);
         if (day == day_factories.end()) {
-            LOG_ERROR(std::format("Day {} not found or not yet implemented", day_num));
+            LOG_ERROR("Day {} not found or not yet implemented", day_num);
             return 1;
         }
-        day->second()->solve();
+        if (auto result = day->second()->solve(); result != DaysError::OK) {
+            return static_cast<int32_t>(result);
+        }
+        return 0;
     }
 
     for (const auto& day : day_factories) {
-        day.second()->solve();
+        if (auto result = day.second()->solve(); result != DaysError::OK) {
+            return static_cast<int32_t>(result);
+        }
     }
 
     return 0;
