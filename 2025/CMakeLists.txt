@@ -15,7 +15,7 @@ endif()
 
 option(DEVELOPMENT_MODE "Enable development mode" OFF)
 
-add_subdirectory(libs/utility)
+add_subdirectory(libs/Utility)
 add_subdirectory(libs/aoc)
 add_subdirectory(src)
 add_subdirectory(tests)

@@ -1,0 +1,4 @@
+[submodule "2025/libs/Utility"]
+	path = 2025/libs/Utility
+	url = git@github.com:NayanShrees/Utility.git
+	branch = main
